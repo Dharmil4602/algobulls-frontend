@@ -72,10 +72,10 @@ function TableData() {
       },
       // Creating filter object for the status column with unique values
       filters: [
-        {text: "Done", value: "Done"},
-        {text: "Working", value: "Working"},
-        {text: "Open", value: "Open",},
-        {text: "Overdue", value: "Overdue",},
+        { text: "Done", value: "Done" },
+        { text: "Working", value: "Working" },
+        { text: "Open", value: "Open" },
+        { text: "Overdue", value: "Overdue" },
       ],
       onFilter: (value, record) => {
         return record.status === value;
@@ -133,12 +133,32 @@ function TableData() {
           maxWidth: "50vw",
           justifyContent: "center",
           alignItems: "center",
-          margin: "0px auto",
+          margin: "20px auto",
         }}
       >
-        {/* <Search></Search> */}
-        <button onClick={addTask}>Add New Task</button>
+        <button
+          onClick={addTask}
+          style={{
+            width: "100px",
+            height: "30px",
+            backgroundColor: "blue",
+            color: "white",
+            borderRadius: "5px",
+            border: "none",
+            marginBottom: "10px",
+            cursor: "pointer",
+          }}
+        >
+          Add New Task
+        </button>
+
         <Table
+        style={{
+          width: "100%",
+          borderRadius: "5px",
+          border: "1px solid black",
+          textAlign: "center",
+        }}
           columns={columns}
           dataSource={dataSource.map((task) => task)}
         ></Table>
