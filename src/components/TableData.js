@@ -7,7 +7,7 @@ import DeleteOutlined from "@ant-design/icons/DeleteOutlined";
 function TableData() {
   let timeStamp = new Date().toLocaleString();
   const [isEditing, setIsEditing] = useState(false);
-  const [editingData, setEditingData] = useState(null)
+  const [editingData, setEditingData] = useState(null);
   const randomStatus = () => {
     const status = ["Done", "Working", "Open", "Overdue"];
     return status[Math.floor(Math.random() * status.length)];
@@ -15,10 +15,9 @@ function TableData() {
 
   const onEditOutlined = (record) => {
     setIsEditing(true);
-    setEditingData({...record})
-  }
+    setEditingData({ ...record });
+  };
 
-    
   const [dataSource, setDataSource] = useState([
     {
       key: "1",
@@ -71,6 +70,16 @@ function TableData() {
       sorter: function (a, b) {
         return a.status - b.status;
       },
+      // Creating filter object for the status column with unique values
+      filters: [
+        {text: "Done", value: "Done"},
+        {text: "Working", value: "Working"},
+        {text: "Open", value: "Open",},
+        {text: "Overdue", value: "Overdue",},
+      ],
+      onFilter: (value, record) => {
+        return record.status === value;
+      },
     },
     {
       key: "6",
@@ -79,26 +88,7 @@ function TableData() {
       render: (text, record) => {
         return (
           <>
-            <EditOutlined 
-            // Creating a pop up box where the user can edit the title and description of the task
-              // onClick={() => {
-              //   const newDataSource = [...dataSource];
-              //   const index = newDataSource.findIndex(
-              //     (item) => item.key === record.key
-              //   );
-              //   newDataSource[index].title = prompt(
-              //     "Enter new title",
-              //     newDataSource[index].title
-              //   );
-              //   newDataSource[index].description = prompt(
-              //     "Enter new description",
-              //     newDataSource[index].description
-              //   );
-              //   setDataSource(newDataSource);
-              // }}
-              onClick={() => onEditOutlined(record)}
-
-            />
+            <EditOutlined onClick={() => onEditOutlined(record)} />
             <DeleteOutlined
               onClick={() => {
                 setDataSource(
@@ -114,9 +104,9 @@ function TableData() {
   ];
 
   const resetData = () => {
-    setEditingData(null)
-    setIsEditing(false)
-  }
+    setEditingData(null);
+    setIsEditing(false);
+  };
   const addTask = () => {
     setDataSource([
       ...dataSource,
@@ -163,10 +153,10 @@ function TableData() {
             );
             newDataSource[index] = editingData;
             setDataSource(newDataSource);
-            resetData()
+            resetData();
           }}
           onCancel={() => {
-            resetData()
+            resetData();
           }}
         >
           <Input
@@ -180,7 +170,10 @@ function TableData() {
             placeholder="Description"
             value={editingData?.description}
             onChange={(data) => {
-              setEditingData({ ...editingData, description: data.target.value });
+              setEditingData({
+                ...editingData,
+                description: data.target.value,
+              });
             }}
           />
         </Modal>
